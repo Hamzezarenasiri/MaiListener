@@ -8,6 +8,7 @@ const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
     PORT: Joi.number().default(3000),
+    SWAGGER_PORT: Joi.number().default(3000),
     DOMAIN: Joi.string().default('localhost'),
     DOMAIN_SCHEME: Joi.string().default('http'),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
@@ -37,6 +38,7 @@ if (error) {
 module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
+  swaggerPort: envVars.SWAGGER_PORT,
   domain: envVars.DOMAIN,
   domainScheme: envVars.DOMAIN_SCHEME,
   mongoose: {
