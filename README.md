@@ -1,26 +1,8 @@
 # RESTful API Node Server Mail Listener
 
-[![Build Status](https://travis-ci.org/hamzezn/mail-listener.svg?branch=master)](https://travis-ci.org/hamzezn/mail-listener)
-[![Coverage Status](https://coveralls.io/repos/github/hamzezn/mail-listener/badge.svg?branch=master)](https://coveralls.io/github/hamzezn/mail-listener?branch=master)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
 A mail-listener/starter project for quickly building RESTful APIs using Node.js, Express, and Mongoose.
 
 By running a single command, you will get a production-ready Node.js app installed and fully configured on your machine. The app comes with many built-in features, such as authentication using JWT, request validation, unit and integration tests, continuous integration, docker support, API documentation, pagination, etc. For more details, check the features list below.
-
-## Quick Start
-
-To create a project, simply run:
-
-```bash
-npx create-nodejs-express-app <project-name>
-```
-
-Or
-
-```bash
-npm init nodejs-express-app <project-name>
-```
 
 ## Manual Installation
 
@@ -29,9 +11,8 @@ If you would still prefer to do the installation manually, follow these steps:
 Clone the repo:
 
 ```bash
-git clone --depth 1 https://github.com/hamzezn/mail-listener.git
-cd mail-listener
-npx rimraf ./.git
+git clone https://github.com/HillzHoldingsCorp/HZD-MailServer.git
+cd HZD-MailServer
 ```
 
 Install the dependencies:
@@ -205,6 +186,12 @@ List of available routes:
 `POST /v1/auth/reset-password` - reset password\
 `POST /v1/auth/send-verification-email` - send verification email\
 `POST /v1/auth/verify-email` - verify email
+
+**MailConfigs**:\
+`POST /v1/mail-configs` - create a mail config\
+`GET /v1/mail-configs` - get all config\
+`DELETE /v1/mail-configs/:mailConfigID` - delete config\
+`POST /v1/mail-configs/:mailConfigID/send-email/` - Send email
 
 **User routes**:\
 `POST /v1/users` - create a user\
