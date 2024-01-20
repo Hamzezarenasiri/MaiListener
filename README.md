@@ -11,8 +11,8 @@ If you would still prefer to do the installation manually, follow these steps:
 Clone the repo:
 
 ```bash
-git clone https://github.com/HillzHoldingsCorp/HZD-MailServer.git
-cd HZD-MailServer
+git clone https://github.com/Hamzezarenasiri/MaiListener.git
+cd MaiListener
 ```
 
 Install the dependencies:
