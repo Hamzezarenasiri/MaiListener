@@ -10,15 +10,7 @@ const createUser = {
   }),
 };
 
-const getUsers = {
-  query: Joi.object().keys({
-    name: Joi.string(),
-    role: Joi.string(),
-    sortBy: Joi.string(),
-    limit: Joi.number().integer(),
-    page: Joi.number().integer(),
-  }),
-};
+const getUsers = {};
 
 const getUser = {
   params: Joi.object().keys({
@@ -41,7 +33,7 @@ const updateUser = {
 
 const deleteUser = {
   params: Joi.object().keys({
-    userId: Joi.string().custom(objectId),
+    mailConfigId: Joi.string().custom(objectId),
   }),
 };
 

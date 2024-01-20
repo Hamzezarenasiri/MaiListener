@@ -18,6 +18,35 @@ components:
         email: fake@example.com
         name: fake name
         role: user
+    MailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        to:
+          type: string
+          format: email
+        subject:
+          type: string
+        text:
+          type: string
+    MailConfig:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        domain:
+          type: string
+      example:
+        id: 5ebac534954b54139806c112
+        email: fake@example.com
+        password: Password@123
+        domain: gmail.com
 
     Token:
       type: object
@@ -49,14 +78,14 @@ components:
 
   responses:
     DuplicateEmail:
-      description: Email already taken
+      description: Email already exist
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
             code: 400
-            message: Email already taken
+            message: Email already exist
     Unauthorized:
       description: Unauthorized
       content:

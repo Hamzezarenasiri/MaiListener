@@ -26,11 +26,6 @@ const mailConfigSchema = mongoose.Schema(
       required: true,
       trim: true,
       minlength: 4,
-      validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error('Password must contain at least one letter and one number');
-        }
-      },
       private: false, // used by the toJSON plugin
     },
     domain: {

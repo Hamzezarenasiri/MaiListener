@@ -7,7 +7,7 @@ const ApiError = require('../utils/ApiError');
  * @param {Object} mailConfigBody
  * @returns {Promise<MailConfig>}
  */
-const createMail = async (mailConfigBody) => {
+const createMailConfig = async (mailConfigBody) => {
   if (await MailConfig.isEmailTaken(mailConfigBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already exist');
   }
@@ -23,7 +23,7 @@ const createMail = async (mailConfigBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<void>}
  */
-const queryMails = async (filter, options) => {
+const queryMailConfigs = async (filter, options) => {
   return MailConfig.paginate(filter, options);
 };
 
@@ -32,7 +32,7 @@ const queryMails = async (filter, options) => {
  * @param {ObjectId} id
  * @returns {Promise<MailConfig>}
  */
-const getMailById = async (id) => {
+const getMailConfigById = async (id) => {
   return MailConfig.findById(id);
 };
 
@@ -41,7 +41,7 @@ const getMailById = async (id) => {
  * @param {string} email
  * @returns {Promise<MailConfig>}
  */
-const getMailByEmail = async (email) => {
+const getMailConfigByEmail = async (email) => {
   return MailConfig.findOne({ email });
 };
 
@@ -51,8 +51,8 @@ const getMailByEmail = async (email) => {
  * @param {Object} updateBody
  * @returns {Promise<MailConfig>}
  */
-const updateMailById = async (mailId, updateBody) => {
-  const mail = await getMailById(mailId);
+const updateMailConfigById = async (mailId, updateBody) => {
+  const mail = await getMailConfigById(mailId);
   if (!mail) {
     throw new ApiError(httpStatus.NOT_FOUND, 'MailConfig not found');
   }
@@ -69,8 +69,8 @@ const updateMailById = async (mailId, updateBody) => {
  * @param {ObjectId} mailId
  * @returns {Promise<MailConfig>}
  */
-const deleteMailById = async (mailId) => {
-  const mail = await getMailById(mailId);
+const deleteMailConfigById = async (mailId) => {
+  const mail = await getMailConfigById(mailId);
   if (!mail) {
     throw new ApiError(httpStatus.NOT_FOUND, 'MailConfig not found');
   }
@@ -79,10 +79,10 @@ const deleteMailById = async (mailId) => {
 };
 
 module.exports = {
-  createMail,
-  queryMails,
-  getMailById,
-  getMailByEmail,
-  updateMailById,
-  deleteMailById,
+  createMailConfig,
+  queryMailConfigs,
+  getMailConfigById,
+  getMailConfigByEmail,
+  updateMailConfigById,
+  deleteMailConfigById,
 };

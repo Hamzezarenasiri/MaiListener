@@ -9,7 +9,7 @@ const ApiError = require('../utils/ApiError');
  */
 const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already exist');
   }
   return User.create(userBody);
 };
@@ -58,7 +58,7 @@ const updateUserById = async (userId, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already exist');
   }
   Object.assign(user, updateBody);
   await user.save();

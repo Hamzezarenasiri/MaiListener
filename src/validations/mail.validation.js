@@ -1,13 +1,11 @@
 const Joi = require('joi');
-const { password, urlValidator, objectId } = require('./custom.validation');
+const { objectId } = require('./custom.validation');
 
-const createMailConfig = {
+const sendMail = {
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().custom(password),
-    domain: Joi.string().optional().custom(urlValidator),
-    port: Joi.number().optional(),
-    tls: Joi.bool().optional(),
+    to: Joi.string().required().email(),
+    subject: Joi.string().required(),
+    text: Joi.string().optional(),
   }),
 };
 
@@ -27,4 +25,4 @@ const deleteMailConfig = {
   }),
 };
 
-module.exports = { createMailConfig, deleteMailConfig, getMailConfigs };
+module.exports = { sendMail, deleteMailConfig, getMailConfigs };

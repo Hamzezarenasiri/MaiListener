@@ -1,15 +1,24 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
+const mailConfigValidation = require('../../validations/mail.config.validation');
 const mailValidation = require('../../validations/mail.validation');
-const mailController = require('../../controllers/mail.controller');
+const { mailConfigController, mailController } = require('../../controllers');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth('addMailConfig'), validate(mailValidation.createMailConfig), mailController.createMailConfig)
-  .get(auth('getMailConfigs'), validate(mailValidation.getMailConfig), mailController.getMailConfigs);
+  .post(auth('addMailConfig'), validate(mailConfigValidation.createMailConfig), mailConfigController.createMailConfig)
+  .get(auth('getMailConfigs'), validate(mailConfigValidation.getMailConfigs), mailConfigController.getMailConfigs);
+
+router
+  .route('/:mailConfigId')
+  .delete(auth('manageMailConfigs'), validate(mailConfigValidation.deleteMailConfig), mailConfigController.deleteMailConfig);
+
+router
+  .route('/:mailConfigId/send-email/')
+  .post(auth('sendMail'), validate(mailValidation.sendMail), mailController.sendMail);
 
 module.exports = router;
 
@@ -133,6 +142,87 @@ module.exports = router;
  *                 totalResults:
  *                   type: integer
  *                   example: 1
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ */
+
+/**
+ * @swagger
+ * /mail-configs/{id}:
+ *   delete:
+ *     summary: Delete a mail-config
+ *     description: Logged-in users can only delete their configs. Only admins can delete other configs.
+ *     tags: [MailConfigs]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MailConfigs id
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /mail-configs/{id}/send-email/:
+ *   post:
+ *     summary: send email
+ *     description: Logged-in users can send email.
+ *     tags: [MailConfigs, Mail]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MailConfigs id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - to
+ *               - subject
+ *               - text
+ *             properties:
+ *               subject:
+ *                 type: string
+ *               to:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               text:
+ *                 type: string
+ *             example:
+ *               to: fake@gmail.com
+ *               subject: Subject One
+ *               text: Some Text
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/MailSchema'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":

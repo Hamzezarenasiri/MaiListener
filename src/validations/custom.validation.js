@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 const objectId = (value, helpers) => {
   if (!value.match(/^[0-9a-fA-F]{24}$/)) {
     return helpers.message('"{{#label}}" must be a valid mongo id');
@@ -15,7 +17,15 @@ const password = (value, helpers) => {
   return value;
 };
 
+const urlValidator = (value, helpers) => {
+  if (validator.isURL(value, { require_valid_protocol: false })) {
+    return value;
+  }
+  return helpers.message('Not valid url');
+};
+
 module.exports = {
   objectId,
   password,
+  urlValidator,
 };
