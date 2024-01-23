@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+const EventEmitter = require('events');
 const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
+
+const eventEmitter = new EventEmitter();
 
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
@@ -36,3 +39,6 @@ process.on('SIGTERM', () => {
     server.close();
   }
 });
+setTimeout(() => {
+  eventEmitter.emit('ReceiveEmails');
+}, 1000);

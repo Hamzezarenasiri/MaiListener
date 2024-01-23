@@ -14,6 +14,7 @@ router.post('/forgot-password', validate(authValidation.forgotPassword), authCon
 router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
 router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
 router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
+router.get('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
 
 module.exports = router;
 
@@ -267,6 +268,28 @@ module.exports = router;
  * @swagger
  * /auth/verify-email:
  *   post:
+ *     summary: verify email
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The verify email token
+ *     responses:
+ *       "204":
+ *         description: No content
+ *       "401":
+ *         description: verify email failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *             example:
+ *               code: 401
+ *               message: verify email failed
+ *   get:
  *     summary: verify email
  *     tags: [Auth]
  *     parameters:

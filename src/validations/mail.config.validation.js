@@ -5,7 +5,7 @@ const createMailConfig = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    domain: Joi.string().optional().custom(urlValidator),
+    imap_host: Joi.string().optional().custom(urlValidator),
     port: Joi.number().optional(),
     tls: Joi.bool().optional(),
   }),
@@ -13,7 +13,7 @@ const createMailConfig = {
 
 const getMailConfigs = {
   query: Joi.object().keys({
-    domain: Joi.string(),
+    imap_host: Joi.string(),
     email: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),

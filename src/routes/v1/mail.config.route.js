@@ -20,6 +20,8 @@ router
   .route('/:mailConfigId/send-email/')
   .post(auth('sendMail'), validate(mailValidation.sendMail), mailController.sendMail);
 
+// router.route('/:mailConfigId/receive-email/').get(auth('receiveMail'), mailController.receiveMail);
+
 module.exports = router;
 
 /**
@@ -47,10 +49,10 @@ module.exports = router;
  *             required:
  *               - email
  *               - password
- *               - domain
+ *               - imap_host
  *               - port
  *             properties:
- *               domain:
+ *               imap_host:
  *                 type: string
  *               email:
  *                 type: string
@@ -66,7 +68,7 @@ module.exports = router;
  *             example:
  *               email: fake@gmail.com
  *               password: password1
- *               domain: gmail.com
+ *               imap_host: imap.gmail.com
  *               port: 993
  *     responses:
  *       "201":
@@ -90,10 +92,10 @@ module.exports = router;
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: domain
+ *         name: imap_host
  *         schema:
  *           type: string
- *         description: domain
+ *         description: imap_host
  *       - in: query
  *         name: email
  *         schema:
@@ -228,3 +230,28 @@ module.exports = router;
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  */
+
+// /**
+//  * @swagger
+//  * /mail-configs/{id}/receive-email/:
+//  *   get:
+//  *     summary: Get all Mails
+//  *     description: ....
+//  *     tags: [MailConfigs]
+//  *     security:
+//  *       - bearerAuth: []
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *         description: MailConfigs id
+//  *     responses:
+//  *       "200":
+//  *         description: OK
+//  *       "401":
+//  *         $ref: '#/components/responses/Unauthorized'
+//  *       "403":
+//  *         $ref: '#/components/responses/Forbidden'
+//  */

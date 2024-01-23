@@ -11,7 +11,7 @@ If you would still prefer to do the installation manually, follow these steps:
 Clone the repo:
 
 ```bash
-git clone https://github.com/Hamzezarenasiri/MaiListener.git
+git clone https://github.com/HamzeZnasiri/MaiListener.git
 cd MaiListener
 ```
 

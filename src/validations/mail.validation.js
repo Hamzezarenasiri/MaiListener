@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const { objectId } = require('./custom.validation');
 
 const sendMail = {
   body: Joi.object().keys({
@@ -9,9 +8,8 @@ const sendMail = {
   }),
 };
 
-const getMailConfigs = {
+const getEmails = {
   query: Joi.object().keys({
-    domain: Joi.string(),
     email: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
@@ -19,10 +17,4 @@ const getMailConfigs = {
   }),
 };
 
-const deleteMailConfig = {
-  params: Joi.object().keys({
-    mailConfigId: Joi.string().custom(objectId),
-  }),
-};
-
-module.exports = { sendMail, deleteMailConfig, getMailConfigs };
+module.exports = { sendMail, getEmails };

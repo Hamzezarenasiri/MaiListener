@@ -30,6 +30,100 @@ components:
           type: string
         text:
           type: string
+    ReceivedEmails:
+      type: object
+      properties:
+        attributes:
+          type: object
+          properties:
+            flags:
+              type: array
+              items:
+                type: string
+            x-gm-labels:
+              type: array
+              items:
+                type: string
+            date:
+              type: string
+              format: date-time
+            uid:
+              type: integer
+            modseq:
+              type: string
+            x-gm-msgid:
+              type: string
+            x-gm-thrid:
+              type: string
+        messageId:
+          type: string
+        email:
+          type: string
+        user_id:
+          type: string
+        email_id:
+          type: string
+        mail:
+          type: object
+          properties:
+            to:
+              type: object
+              properties:
+                value:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      address:
+                        type: string
+                      name:
+                        type: string
+                  html:
+                    type: string
+                  text:
+                    type: string
+            from:
+              type: object
+              properties:
+                value:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      address:
+                        type: string
+                      name:
+                        type: string
+                  html:
+                    type: string
+                  text:
+                    type: string
+            _id:
+              type: string
+            headers:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+            html:
+              type: string
+            text:
+              type: string
+            textAsHtml:
+              type: string
+            subject:
+              type: string
+            date:
+              type: string
+              format: date-time
+        id:
+          type: string
     MailConfig:
       type: object
       properties:

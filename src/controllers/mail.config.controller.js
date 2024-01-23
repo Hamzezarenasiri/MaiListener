@@ -2,16 +2,25 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { mailConfigService } = require('../services');
+const { mailConfigService, mailService } = require('../services');
 
 const createMailConfig = catchAsync(async (req, res) => {
   req.body.user_id = req.user.id;
   const mailConfig = await mailConfigService.createMailConfig(req.body);
+  const mailInfo = {
+    email: mailConfig.email,
+    password: mailConfig.password,
+    imap_host: mailConfig.imap_host,
+    port: mailConfig.port,
+    email_id: mailConfig.id,
+    user_id: mailConfig.user_id,
+  };
+  mailService.receiveMail(mailInfo);
   res.status(httpStatus.CREATED).send(mailConfig);
 });
 
 const getMailConfigs = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['email', 'domain']);
+  const filter = pick(req.query, ['email', 'imap_host']);
   filter.user_id = req.user.id;
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await mailConfigService.queryMailConfigs(filter, options);

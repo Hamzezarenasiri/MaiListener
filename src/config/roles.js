@@ -1,6 +1,15 @@
 const allRoles = {
-  user: ['addMailConfig', 'getMailConfigs', 'manageMailConfigs', 'sendMail'],
-  admin: ['getUsers', 'manageUsers', 'addMailConfig', 'getMailConfigs', 'manageMailConfigs', 'sendMail'],
+  user: ['addMailConfig', 'getMailConfigs', 'manageMailConfigs', 'sendMail', 'receiveMail', 'getMyEmails'],
+  admin: [
+    'getUsers',
+    'manageUsers',
+    'addMailConfig',
+    'getMailConfigs',
+    'manageMailConfigs',
+    'sendMail',
+    'receiveMail',
+    'getMyEmails',
+  ],
 };
 
 const roles = Object.keys(allRoles);

@@ -28,7 +28,7 @@ const mailConfigSchema = mongoose.Schema(
       minlength: 4,
       private: false, // used by the toJSON plugin
     },
-    domain: {
+    imap_host: {
       type: String,
       required: false,
       trim: true,

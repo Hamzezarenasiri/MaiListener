@@ -4,26 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e3cdacb-3c79-420f-95bf-85d4cfd5dbaa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/controllers/mail.config.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/mail.controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/mail.config.model.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/v1/mail.config.route.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/mail.config.service.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/mail.service.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/validations/mail.config.validation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/validations/mail.validation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+    <list default="true" id="5e3cdacb-3c79-420f-95bf-85d4cfd5dbaa" name="Changes" comment=":art: added imap receive email  :art:">
+      <change afterPath="$PROJECT_DIR$/src/models/received.mail.model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/v1/received.mail.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/roles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/mail.config.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/mail.config.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/mail.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/mail.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/docs/components.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/components.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/mail.config.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/mail.config.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/auth.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/auth.route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/v1/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/user.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/custom.validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/custom.validation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validations/user.validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/user.validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/v1/mail.config.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/v1/mail.config.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/auth.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/email.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/email.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/mail.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/mail.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/mail.config.validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/mail.config.validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validations/mail.validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/validations/mail.validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +66,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "20.11.0",
     "javascript.nodejs.core.library.typings.version": "20.11.5",
-    "last_opened_file_path": "C:/Users/HamWin/WebstormProjects/MailListener/src/services",
+    "last_opened_file_path": "C:/Users/HamWin/WebstormProjects/MailListener/src/models",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,10 +82,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\HamWin\WebstormProjects\MailListener\src\models" />
       <recent name="C:\Users\HamWin\WebstormProjects\MailListener\src\services" />
       <recent name="C:\Users\HamWin\WebstormProjects\MailListener\src\controllers" />
       <recent name="C:\Users\HamWin\WebstormProjects\MailListener\src\validations" />
-      <recent name="C:\Users\HamWin\WebstormProjects\MailListener\src\models" />
       <recent name="C:\Users\HamWin\WebstormProjects\MailListener" />
     </key>
   </component>
@@ -118,8 +122,31 @@
       <workItem from="1705572332019" duration="42000" />
       <workItem from="1705572390323" duration="645000" />
       <workItem from="1705574896708" duration="224000" />
-      <workItem from="1705575143558" duration="26372000" />
+      <workItem from="1705575143558" duration="29160000" />
+      <workItem from="1705740664162" duration="3976000" />
+      <workItem from="1705829045073" duration="6442000" />
+      <workItem from="1705871279618" duration="7853000" />
+      <workItem from="1705905849621" duration="62000" />
+      <workItem from="1705909622983" duration="13973000" />
+      <workItem from="1705988541811" duration="16545000" />
     </task>
+    <task id="LOCAL-00001" summary=":art: Update README.md :art:">
+      <option name="closed" value="true" />
+      <created>1705710693201</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705710693201</updated>
+    </task>
+    <task id="LOCAL-00002" summary=":art: Update swaggerDef.js :art:">
+      <option name="closed" value="true" />
+      <created>1705713098069</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1705713098069</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,5 +156,10 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
+    <MESSAGE value="added mail Config endpoints&#10;added send mail end point" />
+    <MESSAGE value=":art: Update README.md :art:" />
+    <MESSAGE value=":art: Update swaggerDef.js :art:" />
+    <MESSAGE value=":art: added imap receive email  :art:" />
+    <option name="LAST_COMMIT_MESSAGE" value=":art: added imap receive email  :art:" />
   </component>
 </project>
