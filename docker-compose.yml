@@ -1,20 +1,20 @@
 version: '3'
 
 services:
-#  node-app:
-#    build: .
-#    image: node-app
-#    command: yarn start
-#    environment:
-#      - MONGODB_URL=mongodb://mongodb:27017/mail-listener
-#    ports:
-#      - '3000:3000'
-#    depends_on:
-#      - mongodb
-#    volumes:
-#      - .:/usr/src/node-app
-#    networks:
-#      - node-network
+  node-app:
+    build: .
+    image: node-app
+    command: yarn start
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017/mail-listener
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/node-app
+    networks:
+      - node-network
 
   mongodb:
     image: mongo:4.2.1-bionic
