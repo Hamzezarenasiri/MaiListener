@@ -44,7 +44,7 @@ module.exports = {
   mongoose: {
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
-      useCreateIndex: true,
+      // useCreateIndex: true, // disable for new mongodb
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },

@@ -1,32 +1,32 @@
 version: '3'
 
 services:
-  node-app:
-    build: .
-    image: node-app
-    command: yarn start
-    environment:
-      - MONGODB_URL=mongodb://mongodb:27017/mail-listener
-    ports:
-      - '3000:3000'
-    depends_on:
-      - mongodb
-    volumes:
-      - .:/usr/src/node-app
-    networks:
-      - node-network
+#  node-app:
+#    build: .
+#    image: node-app
+#    command: yarn start
+#    environment:
+#      - MONGODB_URL=mongodb://mongodb:27017/mail-listener
+#    ports:
+#      - '3000:3000'
+#    depends_on:
+#      - mongodb
+#    volumes:
+#      - .:/usr/src/node-app
+#    networks:
+#      - node-network
 
   mongodb:
-    image: mongo:4.2.1-bionic
+    image: mongo:6.0.13-jammy
     ports:
       - '27017:27017'
     volumes:
-      - dbdata:/data/db
+      - dbdatav6:/data/db
     networks:
       - node-network
 
 volumes:
-  dbdata:
+  dbdatav6:
 
 networks:
   node-network:
