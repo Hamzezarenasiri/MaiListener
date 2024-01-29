@@ -22,12 +22,12 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - db_data:/data/db
+      - dbdata:/data/db
     networks:
       - node-network
 
 volumes:
-  dbdatav6:
+  dbdata:
 
 networks:
   node-network:
