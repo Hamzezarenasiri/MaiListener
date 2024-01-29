@@ -13,9 +13,22 @@ const swaggerDef = {
   },
   servers: [
     {
-      url: `${config.domainScheme}://${config.domain}:${config.swaggerPort}/v1`,
+      url: `${config.swagger.scheme}://${config.domain}:${config.swagger.port}/v1`,
     },
   ],
+  components: {
+    parameters: {
+      ExampleParam: {
+        name: 'exampleParam',
+        in: 'query',
+        description: 'Description with a dynamic link {@link <%= exampleLink %>}.',
+        required: true,
+        schema: {
+          type: 'string',
+        },
+      },
+    },
+  },
 };
 
 module.exports = swaggerDef;

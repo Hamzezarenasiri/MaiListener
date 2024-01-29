@@ -4,6 +4,8 @@ const { toJSON, paginate } = require('./plugins');
 
 const mailConfigSchema = mongoose.Schema(
   {
+    refreshToken: { type: String, required: false },
+    accessToken: { type: String, required: false },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -23,7 +25,7 @@ const mailConfigSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       minlength: 4,
       private: false, // used by the toJSON plugin
@@ -62,7 +64,7 @@ mailConfigSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   return !!emailConfig;
 };
 
-mailConfigSchema.pre('save', async function (next) {
+mailConfigSchema.pre('save', async (next) => {
   next();
 });
 

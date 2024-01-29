@@ -41,4 +41,4 @@ process.on('SIGTERM', () => {
 });
 setTimeout(() => {
   eventEmitter.emit('ReceiveEmails');
-}, 1000);
+}, 10);

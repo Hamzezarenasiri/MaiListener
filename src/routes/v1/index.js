@@ -2,6 +2,7 @@ const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const mailRoute = require('./mail.config.route');
+const oauthMailRoute = require('./oauth.mail.config.route');
 const receivedRoute = require('./received.mail.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -20,6 +21,10 @@ const defaultRoutes = [
   {
     path: '/mail-configs',
     route: mailRoute,
+  },
+  {
+    path: '/oauth-mail-configs',
+    route: oauthMailRoute,
   },
   {
     path: '/received-emails',

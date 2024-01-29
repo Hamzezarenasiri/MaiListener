@@ -10,6 +10,11 @@ const createMailConfig = {
     tls: Joi.bool().optional(),
   }),
 };
+const createOauthMailConfig = {
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+  }),
+};
 
 const getMailConfigs = {
   query: Joi.object().keys({
@@ -27,4 +32,4 @@ const deleteMailConfig = {
   }),
 };
 
-module.exports = { createMailConfig, deleteMailConfig, getMailConfigs };
+module.exports = { createMailConfig, createOauthMailConfig, deleteMailConfig, getMailConfigs };

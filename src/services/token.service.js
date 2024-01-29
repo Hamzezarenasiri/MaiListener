@@ -113,6 +113,23 @@ const generateVerifyEmailToken = async (user) => {
   return verifyEmailToken;
 };
 
+/**
+ * Generate social access token
+ * @param {User} user
+ * @returns {Promise<Object>}
+ */
+const generateSocialAccessToken = async (user) => {
+  const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
+  const accessToken = generateToken(user.id, accessTokenExpires, tokenTypes.SOCIAL_ACCESS);
+  await saveToken(accessToken, user.id, accessTokenExpires, tokenTypes.SOCIAL_ACCESS);
+  return {
+    access: {
+      token: accessToken,
+      expires: accessTokenExpires.toDate(),
+    },
+  };
+};
+
 module.exports = {
   generateToken,
   saveToken,
@@ -120,4 +137,5 @@ module.exports = {
   generateAuthTokens,
   generateResetPasswordToken,
   generateVerifyEmailToken,
+  generateSocialAccessToken,
 };

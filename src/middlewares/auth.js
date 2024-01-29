@@ -3,6 +3,15 @@ const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { roleRights } = require('../config/roles');
 
+/**
+ * Verify callback function for passport authentication.
+ * @function
+ * @param {Object} req - The request object.
+ * @param {Function} resolve - The resolve function of the promise.
+ * @param {Function} reject - The reject function of the promise.
+ * @param {string[]} requiredRights - The required rights for authorization.
+ * @returns {Function} The verify callback function.
+ */
 const verifyCallback = (req, resolve, reject, requiredRights) => async (err, user, info) => {
   if (err || info || !user) {
     return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate'));
@@ -20,14 +29,21 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
   resolve();
 };
 
-const auth =
-  (...requiredRights) =>
-  async (req, res, next) => {
-    return new Promise((resolve, reject) => {
+/**
+ * Middleware function for authentication and authorization.
+ * @module middleware/auth
+ * @param {...string} requiredRights - The required rights for authorization.
+ * @returns {Function} The middleware function.
+ */
+const auth = (...requiredRights) => async (req, res, next) => {
+  try {
+    await new Promise((resolve, reject) => {
       passport.authenticate('jwt', { session: false }, verifyCallback(req, resolve, reject, requiredRights))(req, res, next);
-    })
-      .then(() => next())
-      .catch((err) => next(err));
-  };
+    });
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = auth;

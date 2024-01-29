@@ -2,12 +2,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const { toJSON, paginate } = require('./plugins');
 
-const HeaderSchema = new mongoose.Schema({
-  key: { type: String, required: false },
-  line: { type: String, required: false },
-});
 const EmailSchema = new mongoose.Schema({
-  headers: [HeaderSchema],
+  headers: { type: Object },
   html: String,
   text: String,
   textAsHtml: String,
@@ -16,7 +12,7 @@ const EmailSchema = new mongoose.Schema({
   to: {
     value: [
       {
-        address: { type: String, required: false },
+        address: String,
         name: String,
       },
     ],
@@ -26,7 +22,7 @@ const EmailSchema = new mongoose.Schema({
   from: {
     value: [
       {
-        address: { type: String, required: false },
+        address: String,
         name: String,
       },
     ],
@@ -34,23 +30,21 @@ const EmailSchema = new mongoose.Schema({
     text: String,
   },
 });
+
 const receivedMailSchema = mongoose.Schema(
   {
     messageId: { type: String, required: true, unique: true },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      unique: false,
     },
     email_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      unique: false,
     },
     email: {
       type: String,
       required: true,
-      unique: false,
       trim: true,
       lowercase: true,
       validate(value) {
@@ -78,10 +72,6 @@ const receivedMailSchema = mongoose.Schema(
 // add plugin that converts mongoose to json
 receivedMailSchema.plugin(toJSON);
 receivedMailSchema.plugin(paginate);
-
-receivedMailSchema.pre('save', async function (next) {
-  next();
-});
 
 /**
  * @typedef ReceivedMail

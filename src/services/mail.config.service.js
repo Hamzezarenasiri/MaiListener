@@ -1,11 +1,33 @@
+/**
+ * Contains functions for managing mail configurations.
+ * @module services/mailConfigService
+ */
+
 const httpStatus = require('http-status');
 const { MailConfig } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
- * Create a mailConfig
- * @param {Object} mailConfigBody
- * @returns {Promise<MailConfig>}
+ * Creates a new mail configuration or retrieves an existing one.
+ * @function
+ * @async
+ * @param {Object} mailConfigBody - The mail configuration data.
+ * @returns {Promise<MailConfig>} The created or retrieved mail configuration.
+ */
+const createOrGetMailConfig = async (mailConfigBody) => {
+  if (await MailConfig.isEmailTaken(mailConfigBody.email)) {
+    return MailConfig.findOne({ email: mailConfigBody.email });
+  }
+  return MailConfig.create(mailConfigBody);
+};
+
+/**
+ * Creates a new mail configuration.
+ * @function
+ * @async
+ * @param {Object} mailConfigBody - The mail configuration data.
+ * @returns {Promise<MailConfig>} The created mail configuration.
+ * @throws {ApiError} If the email is already taken.
  */
 const createMailConfig = async (mailConfigBody) => {
   if (await MailConfig.isEmailTaken(mailConfigBody.email)) {
@@ -23,27 +45,21 @@ const createMailConfig = async (mailConfigBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<void>}
  */
-const queryMailConfigs = async (filter, options) => {
-  return MailConfig.paginate(filter, options);
-};
+const queryMailConfigs = async (filter, options) => MailConfig.paginate(filter, options);
 
 /**
  * Get mail by id
  * @param {ObjectId} id
  * @returns {Promise<MailConfig>}
  */
-const getMailConfigById = async (id) => {
-  return MailConfig.findById(id);
-};
+const getMailConfigById = async (id) => MailConfig.findById(id);
 
 /**
  * Get mail by email
  * @param {string} email
  * @returns {Promise<MailConfig>}
  */
-const getMailConfigByEmail = async (email) => {
-  return MailConfig.findOne({ email });
-};
+const getMailConfigByEmail = async (email) => MailConfig.findOne({ email });
 
 /**
  * Update mail by id
@@ -80,6 +96,7 @@ const deleteMailConfigById = async (mailId) => {
 
 module.exports = {
   createMailConfig,
+  createOrGetMailConfig,
   queryMailConfigs,
   getMailConfigById,
   getMailConfigByEmail,
