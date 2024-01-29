@@ -10,8 +10,13 @@ const { mailService, mailConfigService } = require('../services');
 const ApiError = require('../utils/ApiError');
 const { MailConfig } = require('../models');
 const pick = require('../utils/pick');
+const logger = require('../config/logger');
 
 const eventEmitter = new EventEmitter();
+setTimeout(() => {
+  eventEmitter.emit('ReceiveEmails');
+  logger.info(' <<<<<<<<<<<Emitter>>>>>>>>>>>>');
+}, 2000);
 
 /**
  * Creates a mailInfo object based on the given mailConfig.
@@ -88,6 +93,7 @@ const getEmails = catchAsync(async (req, res) => {
  * Event listener for receiving emails.
  */
 eventEmitter.on('ReceiveEmails', async () => {
+  logger.info(' <<<<<<<<<<<Emitter On :)>>>>>>>>>>>>');
   const mailConfigs = await MailConfig.find();
   mailConfigs.forEach((mailConfig) => {
     mailService.receiveMail(createMailInfo(mailConfig));

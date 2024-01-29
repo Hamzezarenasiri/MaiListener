@@ -167,57 +167,60 @@ const receiveGmail = async (mailInfo) => {
  * @param {Object} mailInfo - The information about the email account.
  */
 const receiveMail = async (mailInfo) => {
-  const mailListener = new MailListener({
-    clientId: mailInfo.clientId,
-    clientSecret: mailInfo.clientSecret,
-    refreshToken: mailInfo.refreshToken,
-    username: mailInfo.email,
-    password: mailInfo.password,
-    host: mailInfo.imap_host,
-    port: mailInfo.port, // imap port
-    tls: true,
-    connTimeout: 10000, // Default by node-imap
-    authTimeout: 5000, // Default by node-imap,
-    debug: console.log, // Or your custom function with only one incoming argument. Default: null
-    autotls: 'never', // default by node-imap
-    tlsOptions: { rejectUnauthorized: false },
-    mailbox: 'INBOX', // mailbox to monitor
-    searchFilter: ['UNSEEN'], // the search filter being used after an IDLE notification has been retrieved
-    markSeen: false, // all fetched email will be marked as seen and not fetched next time
-    fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`,
-    attachments: false, // download attachments as they are encountered to the project directory
-    attachmentOptions: { directory: 'media/mail_attachments/' }, // specify a download directory for attachments
-  });
-
-  mailListener.start();
-  mailListener.on('mail', async (mail, seqno, attributes) => {
-    try {
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      const emailExists = await ReceivedMail.exists({ messageId: mail.messageId });
-      if (!emailExists) {
-        ReceivedMail.create({
-          messageId: mail.messageId,
-          email: mailInfo.email,
-          user_id: mailInfo.user_id,
-          email_id: mailInfo.email_id,
-          mail,
-          attributes,
-        });
-        logger.debug(`New Email Received: ${mail.subject}`);
+  if (mailInfo.refreshToken) {
+    receiveGmail(mailInfo);
+  } else {
+    const mailListener = new MailListener({
+      clientId: mailInfo.clientId,
+      clientSecret: mailInfo.clientSecret,
+      refreshToken: mailInfo.refreshToken,
+      username: mailInfo.email,
+      password: mailInfo.password,
+      host: mailInfo.imap_host,
+      port: mailInfo.port, // imap port
+      tls: true,
+      connTimeout: 10000, // Default by node-imap
+      authTimeout: 5000, // Default by node-imap,
+      debug: console.log, // Or your custom function with only one incoming argument. Default: null
+      autotls: 'never', // default by node-imap
+      tlsOptions: { rejectUnauthorized: false },
+      mailbox: 'INBOX', // mailbox to monitor
+      searchFilter: ['UNSEEN'], // the search filter being used after an IDLE notification has been retrieved
+      markSeen: false, // all fetched email will be marked as seen and not fetched next time
+      fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`,
+      attachments: false, // download attachments as they are encountered to the project directory
+      attachmentOptions: { directory: 'media/mail_attachments/' }, // specify a download directory for attachments
+    });
+    mailListener.start();
+    mailListener.on('mail', async (mail, seqno, attributes) => {
+      try {
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
+        const emailExists = await ReceivedMail.exists({ messageId: mail.messageId });
+        if (!emailExists) {
+          ReceivedMail.create({
+            messageId: mail.messageId,
+            email: mailInfo.email,
+            user_id: mailInfo.user_id,
+            email_id: mailInfo.email_id,
+            mail,
+            attributes,
+          });
+          logger.debug(`New Email Received: ${mail.subject}`);
+        }
+      } catch (error) {
+        logger.error('Error:', error);
+        logger.error('Error:', error.message);
       }
-    } catch (error) {
-      logger.error('Error:', error);
-      logger.error('Error:', error.message);
-    }
-  });
+    });
 
-  mailListener.on('server:disconnected', () => {
-    logger.error('imapDisconnected');
-  });
+    mailListener.on('server:disconnected', () => {
+      logger.error('imapDisconnected');
+    });
 
-  mailListener.on('error', (err) => {
-    console.error(err);
-  });
+    mailListener.on('error', (err) => {
+      logger.error(err);
+    });
+  }
 };
 
 module.exports = {
