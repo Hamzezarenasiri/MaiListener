@@ -6,7 +6,7 @@ services:
     image: node-app
     command: yarn start
     environment:
-      - MONGODB_URL=mongodb://u4540:f4rdaS4rma@mongodb:27017/mail-listener
+      - MONGODB_URL=mongodb://mongodb:27017/mail-listener
     ports:
       - '3000:3000'
     depends_on:
@@ -21,16 +21,13 @@ services:
     restart: always
     ports:
       - '27017:27017'
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: u4540
-      MONGO_INITDB_ROOT_PASSWORD: f4rdaS4rma
     volumes:
       - db_data:/data/db
     networks:
       - node-network
 
 volumes:
-  db_data:
+  dbdatav6:
 
 networks:
   node-network:
