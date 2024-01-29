@@ -4,6 +4,7 @@ services:
   node-app:
     build: .
     image: node-app
+    restart: always
     command: yarn start
     environment:
       - MONGODB_URL=mongodb://mongodb:27017/mail-listener
