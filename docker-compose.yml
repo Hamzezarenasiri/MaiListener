@@ -30,7 +30,7 @@ services:
       - node-network
 
 volumes:
-  dbdatav6:
+  db_data:
 
 networks:
   node-network:
