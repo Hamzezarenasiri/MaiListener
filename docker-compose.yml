@@ -6,7 +6,7 @@ services:
     image: node-app
     command: yarn start
     environment:
-      - MONGODB_URL=mongodb://u4540:f4rdaS4rma@27017/mail-listener
+      - MONGODB_URL=mongodb://u4540:f4rdaS4rma@mongodb:27017/mail-listener
     ports:
       - '3000:3000'
     depends_on:
