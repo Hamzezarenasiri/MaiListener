@@ -23,7 +23,7 @@ services:
       - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: u4540
-      MONGO_INITDB_ROOT_PASSWORD: f@rdaS@rma
+      MONGO_INITDB_ROOT_PASSWORD: f4rdaS4rma
     volumes:
       - db_data:/data/db
     networks:
