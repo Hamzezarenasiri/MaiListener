@@ -12,6 +12,7 @@ const ReceivedMail = require('../models/received.mail.model');
 const config = require('../config/config');
 const { extractNameAndEmailFromString } = require('../utils/emailTools');
 const { parseDateStringToUTC } = require('../utils/dateTools');
+const { mailConfigService } = require('./index');
 
 /**
  * Queries for emails in a MongoDB database.
@@ -246,7 +247,9 @@ const receiveMail = async (mailInfo) => {
 const getGmailDetails = async function getGmailDetails(encodedData, messageId) {
   const decodedObject = JSON.parse(Buffer.from(encodedData, 'base64').toString('utf-8'));
   const userId = decodedObject.emailAddress;
+  const mailConfig = await mailConfigService.getMailConfigByEmail(userId);
   const oAuth2Client = new google.auth.OAuth2(config.google.clientId, config.google.clientSecret);
+  oAuth2Client.setCredentials({ access_token: mailConfig.accessToken, refresh_token: mailConfig.refreshToken });
   const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
   const response = await gmail.users.messages.get({ userId, id: messageId });
   return response.data;
