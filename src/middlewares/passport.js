@@ -23,7 +23,7 @@ passport.use(
     {
       clientID: config.google.clientId,
       clientSecret: config.google.clientSecret,
-      callbackURL: `${config.domainScheme}://${config.domain}:${config.port}/v1/oauth-mail-configs/google/callback`,
+      callbackURL: config.google.callbackURL,
       passReqToCallback: true,
     },
     async (request, accessToken, refreshToken, info, profile, done) => {

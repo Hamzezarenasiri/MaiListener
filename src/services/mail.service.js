@@ -24,7 +24,7 @@ const { parseDateStringToUTC } = require('../utils/dateTools');
  * @returns {Promise<QueryResult>} The query result.
  */
 const queryEmails = async (filter, options) => {
-  const emails = await ReceivedMail.paginate(filter, options);
+  const [emails] = await Promise.all([ReceivedMail.paginate(filter, options)]);
   logger.debug('Emails:', emails);
   return emails;
 };

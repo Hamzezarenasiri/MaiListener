@@ -8,7 +8,7 @@ const router = express.Router();
 router.route('/google').get(auth(), (req, res) => {
   const token = req.user.id;
   res.send(
-    `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.google.clientId}&redirect_uri=${config.domainScheme}://${config.domain}/v1/oauth-mail-configs/google/callback&response_type=code&scope=profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/pubsub&include_granted_scopes=true&access_type=offline&state=${token}`
+    `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.google.clientId}&redirect_uri=${config.google.callbackURL}&response_type=code&scope=profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/pubsub&include_granted_scopes=true&access_type=offline&state=${token}`
   );
 });
 
