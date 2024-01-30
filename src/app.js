@@ -76,12 +76,18 @@ app.get('/success', isLoggedIn, (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
-  const { messageId, data } = req.body;
-  logger.info(`Received email with ID: ${messageId}`);
-  // Fetch the email details using Gmail API
-  const emailDetails = await getGmailDetails(data, messageId);
-  logger.info('Email Details:', emailDetails);
-  res.status(200).send('Webhook received');
+  try {
+    const { messageId, data } = req.body;
+    logger.debug('req', req);
+    logger.debug('req.body', req.body);
+    logger.info(`Received email with ID: ${messageId}`);
+    // Fetch the email details using Gmail API
+    const emailDetails = await getGmailDetails(data, messageId);
+    logger.info('Email Details:', emailDetails);
+    res.status(200).send('Webhook received');
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 // v1 api routes
