@@ -82,7 +82,7 @@ async function processMessage(msg, mailInfo) {
  * @param {Object} gmail - The Gmail API client.
  * @param {Object} mailInfo - The information about the email account.
  */
-function GmailListener(gmail, mailInfo) {
+const GmailListener = function GmailListener(gmail, mailInfo) {
   const checkMail = (gmaill, mailInfoo) => {
     gmaill.users.messages.list(
       {
@@ -123,7 +123,7 @@ function GmailListener(gmail, mailInfo) {
     );
   };
   checkMail(gmail, mailInfo);
-}
+};
 
 /**
  * Sends an email using the nodemailer library.
@@ -248,11 +248,23 @@ const getGmailDetails = async function getGmailDetails(encodedData, messageId) {
   const decodedObject = JSON.parse(Buffer.from(encodedData, 'base64').toString('utf-8'));
   const userId = decodedObject.emailAddress;
   const mailConfig = await mailConfigService.getMailConfigByEmail(userId);
+  const mailInfo = {
+    accessToken: mailConfig.accessToken,
+    refreshToken: mailConfig.refreshToken,
+    email: mailConfig.email,
+    password: mailConfig.password,
+    imap_host: mailConfig.imap_host,
+    port: mailConfig.port,
+    email_id: mailConfig.id,
+    user_id: mailConfig.user_id,
+  };
   const oAuth2Client = new google.auth.OAuth2(config.google.clientId, config.google.clientSecret);
   oAuth2Client.setCredentials({ access_token: mailConfig.accessToken, refresh_token: mailConfig.refreshToken });
   const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
-  const response = await gmail.users.messages.get({ userId, id: messageId });
-  return response.data;
+  logger.debug('messageId:', messageId);
+  // const response = await gmail.users.messages.get({ userId, id: messageId });
+  GmailListener(gmail, mailInfo);
+  return { res: 'OK' };
 };
 
 module.exports = {
