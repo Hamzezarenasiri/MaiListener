@@ -5,6 +5,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const compression = require('compression');
 const cors = require('cors');
 const passport = require('passport');
+const util = require('util');
+const console = require('console');
 const httpStatus = require('http-status');
 const session = require('express-session');
 const config = require('./config/config');
@@ -78,8 +80,8 @@ app.get('/success', isLoggedIn, (req, res) => {
 app.post('/webhook', async (req, res) => {
   try {
     const { messageId, data } = req.body;
-    logger.debug('req', req);
-    logger.debug('req.body', req.body);
+    console.log(util.inspect(req.body, { showHidden: false, depth: null, colors: true }));
+    console.log(util.inspect(req, { showHidden: false, depth: null, colors: true }));
     logger.info(`Received email with ID: ${messageId}`);
     // Fetch the email details using Gmail API
     const emailDetails = await getGmailDetails(data, messageId);
