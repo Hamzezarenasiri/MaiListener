@@ -7,7 +7,6 @@ const cors = require('cors');
 const passport = require('passport');
 const httpStatus = require('http-status');
 const session = require('express-session');
-const console = require('console');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 const { jwtStrategy } = require('./config/passport');
@@ -17,6 +16,8 @@ const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 require('./middlewares/passport');
 const { isLoggedIn } = require('./middlewares/passport');
+const logger = require('./config/logger');
+const { getGmailDetails } = require('./services/mail.service');
 
 const app = express();
 
@@ -74,10 +75,13 @@ app.get('/success', isLoggedIn, (req, res) => {
   res.send(`Welcome ${req.user.displayName}`);
 });
 
-app.post('/webhook', (req, res) => {
-  const data = req.body;
-  console.log('Received notification:>>>>>>>>>>>>>', data, '<<<<<<<<<<<<<<<<<<<<<<<<<');
-  res.status(200).send('OK');
+app.post('/webhook', async (req, res) => {
+  const { messageId, data } = req.body;
+  logger.info(`Received email with ID: ${messageId}`);
+  // Fetch the email details using Gmail API
+  const emailDetails = await getGmailDetails(data, messageId);
+  logger.info('Email Details:', emailDetails);
+  res.status(200).send('Webhook received');
 });
 
 // v1 api routes

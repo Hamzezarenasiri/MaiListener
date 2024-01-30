@@ -2,13 +2,12 @@
  * A module for sending and receiving emails using various email providers.
  * @module emailUtils
  */
-
 const nodemailer = require('nodemailer');
 const { MailListener } = require('mail-listener5');
 const console = require('console');
-const { OAuth2Client } = require('google-auth-library');
 const { google } = require('googleapis');
 const _ = require('lodash');
+const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
 const ReceivedMail = require('../models/received.mail.model');
 const config = require('../config/config');
@@ -124,9 +123,6 @@ function GmailListener(gmail, mailInfo) {
     );
   };
   checkMail(gmail, mailInfo);
-  setInterval(() => {
-    checkMail(gmail, mailInfo);
-  }, 30000);
 }
 
 /**
@@ -155,10 +151,35 @@ const sendMail = async (mailBody) => {
  * @param {Object} mailInfo - The information about the email account.
  */
 const receiveGmail = async (mailInfo) => {
-  const oAuth2Client = new OAuth2Client(config.google.clientId, config.google.clientSecret);
-  oAuth2Client.setCredentials({ refresh_token: mailInfo.refreshToken });
+  const oAuth2Client = new google.auth.OAuth2(config.google.clientId, config.google.clientSecret);
+  oAuth2Client.setCredentials({ access_token: mailInfo.accessToken, refresh_token: mailInfo.refreshToken });
 
   const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+
+  const setupGmailWatch = async () => {
+    try {
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      const response = await gmail.users.watch({
+        userId: mailInfo.email,
+        resource: {
+          labelIds: ['INBOX'],
+          topicName: 'projects/maillistener-412210/topics/MailListener',
+        },
+      });
+      logger.info('Gmail watch response:', response.data);
+    } catch (error) {
+      logger.error('Error setting up Gmail watch:', error.message);
+      // If the error is due to unauthorized, you might need to refresh the token
+      if (error.message === 'User not authorized to perform this action') {
+        // Refresh the access token
+        const refreshedToken = await oAuth2Client.getAccessToken();
+        oAuth2Client.setCredentials({ access_token: refreshedToken.token });
+        // Retry setting up Gmail watch
+        await setupGmailWatch();
+      }
+    }
+  };
+  await setupGmailWatch();
   GmailListener(gmail, mailInfo);
 };
 
@@ -223,9 +244,19 @@ const receiveMail = async (mailInfo) => {
   }
 };
 
+const getGmailDetails = async function getGmailDetails(data, messageId) {
+  const decodeDate = jwt.decode(data);
+  const userId = decodeDate.emailAddress;
+  const oAuth2Client = new google.auth.OAuth2(config.google.clientId, config.google.clientSecret);
+  const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+  const response = await gmail.users.messages.get({ userId, id: messageId });
+  return response.data;
+};
+
 module.exports = {
   sendMail,
   receiveMail,
   receiveGmail,
   queryEmails,
+  getGmailDetails,
 };
