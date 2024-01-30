@@ -79,9 +79,8 @@ app.get('/success', isLoggedIn, (req, res) => {
 
 app.post('/webhook', async (req, res) => {
   try {
-    const { messageId, data } = req.body;
+    const { messageId, data } = req.body.message;
     console.log(util.inspect(req.body, { showHidden: false, depth: null, colors: true }));
-    console.log(util.inspect(req, { showHidden: false, depth: null, colors: true }));
     logger.info(`Received email with ID: ${messageId}`);
     // Fetch the email details using Gmail API
     const emailDetails = await getGmailDetails(data, messageId);
