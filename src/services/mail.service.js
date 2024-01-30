@@ -7,7 +7,6 @@ const { MailListener } = require('mail-listener5');
 const console = require('console');
 const { google } = require('googleapis');
 const _ = require('lodash');
-const jwt = require('jsonwebtoken');
 const logger = require('../config/logger');
 const ReceivedMail = require('../models/received.mail.model');
 const config = require('../config/config');
@@ -244,9 +243,9 @@ const receiveMail = async (mailInfo) => {
   }
 };
 
-const getGmailDetails = async function getGmailDetails(data, messageId) {
-  const decodeDate = jwt.decode(data);
-  const userId = decodeDate.emailAddress;
+const getGmailDetails = async function getGmailDetails(encodedData, messageId) {
+  const decodedObject = JSON.parse(Buffer.from(encodedData, 'base64').toString('utf-8'));
+  const userId = decodedObject.emailAddress;
   const oAuth2Client = new google.auth.OAuth2(config.google.clientId, config.google.clientSecret);
   const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
   const response = await gmail.users.messages.get({ userId, id: messageId });
