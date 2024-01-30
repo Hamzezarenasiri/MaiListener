@@ -20,15 +20,15 @@ services:
   mongodb:
     image: mongo:6.0.13-jammy
     restart: always
-    ports:
-      - '27017:27017'
+#    ports:
+#      - '27017:27017'
     volumes:
-      - dbdata:/data/db
+      - dbdata1:/data/db
     networks:
       - node-network
 
 volumes:
-  dbdata:
+  dbdata1:
 
 networks:
   node-network:
